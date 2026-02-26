@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { exercises } from '@/lib/exercises';
 import ExercisePlayer from '@/components/ExercisePlayer';
-import { Lock, Play } from 'lucide-react';
+import SettingsModal from '@/components/SettingsModal';
+import { Lock, Play, Settings } from 'lucide-react';
 
 export default function AppPage() {
   const [selectedExercise, setSelectedExercise] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
 
   if (selectedExercise) {
     const exercise = exercises.find(e => e.id === selectedExercise);
@@ -30,9 +32,14 @@ export default function AppPage() {
       <div className="bg-white border-b sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-gray-900">EyeZen</h1>
-          <button className="text-sm text-blue-600 font-medium">
-            ⚙️ Settings
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowSettings(true)}
+              className="text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <Settings size={24} />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -121,6 +128,9 @@ export default function AppPage() {
           })}
         </div>
       </div>
+
+      {/* Settings Modal */}
+      <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
     </main>
   );
 }
