@@ -39,7 +39,7 @@ export function useStripeCheckout() {
       const { sessionId } = await response.json();
 
       // Redirect to Stripe Checkout
-      const result = await stripe.redirectToCheckout({ sessionId });
+      const result = await (stripe as any).redirectToCheckout({ sessionId });
 
       if (result.error) {
         throw new Error(result.error.message);
