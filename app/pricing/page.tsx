@@ -1,7 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import { Check, X } from 'lucide-react';
+import { useStripeCheckout } from '@/hooks/useStripeCheckout';
 
 export default function PricingPage() {
+  const { handleCheckout } = useStripeCheckout();
+
   const features = [
     { name: '3 Basic exercises', free: true, premium: true },
     { name: '10 Premium exercises', free: false, premium: true },
@@ -93,7 +98,7 @@ export default function PricingPage() {
 
             <button
               className="w-full py-3 bg-white text-blue-600 font-semibold rounded-xl hover:bg-gray-100 transition-all"
-              onClick={() => alert('Stripe checkout coming soon!')}
+              onClick={() => handleCheckout('monthly')}
             >
               Upgrade to Premium
             </button>
@@ -101,6 +106,22 @@ export default function PricingPage() {
             <p className="text-xs text-center mt-4 opacity-75">
               30-day money-back guarantee • Cancel anytime
             </p>
+          </div>
+        </div>
+
+        {/* Lifetime Deal */}
+        <div className="mt-8 max-w-4xl mx-auto">
+          <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6 border-2 border-yellow-200 text-center">
+            <h3 className="font-bold text-lg mb-2">💡 Want to save 50%?</h3>
+            <p className="text-sm text-gray-700 mb-4">
+              Get lifetime access for just <span className="font-bold">$29.99</span> (one-time payment)
+            </p>
+            <button
+              onClick={() => handleCheckout('lifetime')}
+              className="px-6 py-2 bg-yellow-500 text-white font-semibold rounded-lg hover:bg-yellow-600 transition-all"
+            >
+              Get Lifetime Deal
+            </button>
           </div>
         </div>
 
