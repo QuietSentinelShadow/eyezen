@@ -1,65 +1,130 @@
-import Image from "next/image";
+'use client';
+
+import Link from 'next/link';
+import { exercises, getFreeExercises } from '@/lib/exercises';
+import { Eye, Timer, Sparkles, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Home() {
+  const freeExercises = getFreeExercises();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      {/* Hero Section */}
+      <div className="container mx-auto px-6 py-20">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Eye className="mx-auto mb-6 text-blue-500" size={64} />
+            <h1 className="text-6xl font-bold text-gray-900 mb-4">
+              EyeZen
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              A calming eye exercise app that guides screen-addicted users through research-backed routines with soothing visuals
+            </p>
+          </motion.div>
+
+          <div className="flex gap-4 justify-center mt-10">
+            <Link
+              href="/app"
+              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-600 shadow-lg transition-all transform hover:scale-105"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Start Free Exercises
+            </Link>
+            <Link
+              href="/pricing"
+              className="px-8 py-4 bg-white text-gray-900 font-semibold rounded-full border-2 border-gray-200 hover:border-blue-300 transition-all"
             >
-              Learning
-            </a>{" "}
-            center.
+              View Pricing
+            </Link>
+          </div>
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-20">
+          <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <Timer className="text-blue-500 mb-4" size={40} />
+            <h3 className="text-xl font-bold mb-2">Timed Reminders</h3>
+            <p className="text-gray-600">
+              Customizable break reminders so you never forget to rest your eyes
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <Eye className="text-purple-500 mb-4" size={40} />
+            <h3 className="text-xl font-bold mb-2">Visual Guides</h3>
+            <p className="text-gray-600">
+              Soothing animations that guide your eye movements with calming colors
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <Sparkles className="text-pink-500 mb-4" size={40} />
+            <h3 className="text-xl font-bold mb-2">Research-Backed</h3>
+            <p className="text-gray-600">
+              10 exercises based on the 20-20-20 rule, Bates method, and more
+            </p>
+          </div>
+        </div>
+
+        {/* Free Exercises Preview */}
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-10">
+            Try These Free Exercises
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {freeExercises.map((exercise) => (
+              <div
+                key={exercise.id}
+                className="bg-white rounded-xl p-6 border-2 border-gray-100 hover:border-blue-200 transition-all"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-semibold text-blue-600 uppercase">
+                    {exercise.category}
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    {exercise.duration}s
+                  </span>
+                </div>
+                <h3 className="font-bold text-lg mb-2">{exercise.name}</h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  {exercise.description}
+                </p>
+                <div className="flex items-start gap-2">
+                  <CheckCircle size={16} className="text-green-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-xs text-gray-500">{exercise.benefits[0]}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Premium Teaser */}
+        <div className="mt-20 text-center bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl p-12 max-w-4xl mx-auto text-white">
+          <h2 className="text-3xl font-bold mb-4">
+            Unlock 7 More Premium Exercises
+          </h2>
+          <p className="text-lg mb-6 opacity-90">
+            Figure-8 tracing, palming, diagonal movements, and more advanced techniques
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/pricing"
+            className="inline-block px-8 py-3 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition-all"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            View Pricing
+          </Link>
         </div>
-      </main>
-    </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t py-10 text-center text-gray-600">
+        <p className="text-sm">
+          Built with ❤️ by amtoc01bot • Protect your eyes, one exercise at a time
+        </p>
+      </footer>
+    </main>
   );
 }
