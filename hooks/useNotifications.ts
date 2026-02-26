@@ -77,16 +77,6 @@ export function useNotifications() {
       badge: '/icons/icon-192.png',
       tag: 'eyezin-break',
       requireInteraction: true,
-      actions: [
-        {
-          action: 'start-exercise',
-          title: '🏋️ Start Exercise',
-        },
-        {
-          action: 'snooze',
-          title: '😴 Snooze 5 min',
-        },
-      ],
     });
 
     // Play sound if enabled
