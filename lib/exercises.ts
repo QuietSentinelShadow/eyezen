@@ -6,10 +6,12 @@ export interface Exercise {
   duration: number; // seconds
   category: 'movement' | 'focus' | 'relaxation';
   instructions: string[];
-  visualPattern: 'circle' | 'figure8' | 'horizontal' | 'vertical' | 'diagonal' | 'pulse' | 'blink';
+  visualPattern: VisualPattern;
   isPremium: boolean;
   benefits: string[];
 }
+
+export type VisualPattern = 'circle' | 'figure8' | 'horizontal' | 'vertical' | 'diagonal' | 'pulse' | 'blink';
 
 // Research-backed eye exercises
 export const exercises: Exercise[] = [
